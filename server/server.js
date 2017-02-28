@@ -15,16 +15,15 @@ app.use(express.static(publicPath)); //middleware
 server.listen(PORT, () => console.log(`Started up on port ${PORT}`));
 
 io.on('connection', (socket) =>{
-    console.log('New user connected');
-    
-    socket.emit('newMessage', generateMessage('Admin','Welcome to the chat app'));
-    
+    console.log('New user connected');    
+    socket.emit('newMessage', generateMessage('Admin','Welcome to the chat app'));    
     socket.broadcast.emit('newMessage', generateMessage('Admin','New user joined'));
     
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('createMessage: ', message);
         //below sends to all connections and not just one
         io.emit('newMessage', generateMessage(message.from, message.text));
+        callback('This is from the server'); //for acknowledgement of request from client -- see index.js        
         //below send to all connections except the one that sent the message
         //socket.broadcast.emit('newMessage', {
         //    from: message.from,
