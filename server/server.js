@@ -23,13 +23,11 @@ io.on('connection', (socket) =>{
         console.log('createMessage: ', message);
         //below sends to all connections and not just one
         io.emit('newMessage', generateMessage(message.from, message.text));
-        callback('This is from the server'); //for acknowledgement of request from client -- see index.js        
-        //below send to all connections except the one that sent the message
-        //socket.broadcast.emit('newMessage', {
-        //    from: message.from,
-        //    text: message.text,
-        //    createdAt: new Date().getTime()
-        //});
+        callback('This is from the server'); //for acknowledgement of request from client -- see index.js
+    });
+    
+    socket.on('createLocationMessage', (coords) => {
+       io.emit('newMessage', generateMessage('Admin', `${coords.latitude}, ${coords.longitude}`));
     });
     
     socket.on('disconnect', () => {
