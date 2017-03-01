@@ -7,11 +7,21 @@ socket.on('disconnect', function() {
     console.log('Disconnected from server');
 });
 
-socket.on('newMessage', function(message) {
+socket.on('newMessage', function (message) {
     console.log('newMessage: ', message);
     
     let li = jQuery('<li></li>');
     li.text(`${message.from}: ${message.text}`)    
+    jQuery('#messages').append(li);
+});
+
+socket.on('newLocationMessage', function (message) {
+    let li = jQuery('<li></li>');
+    let a = jQuery('<a target="_blank">My current location</a>');
+    
+    li.text(`${message.from}: `);
+    a.attr('href', message.url);
+    li.append(a);
     jQuery('#messages').append(li);
 });
 
