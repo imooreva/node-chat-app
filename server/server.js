@@ -23,7 +23,7 @@ io.on('connection', (socket) =>{
         console.log('createMessage: ', message);
         //below sends to all connections and not just one
         io.emit('newMessage', generateMessage(message.from, message.text));
-        callback('This is from the server'); //for acknowledgement of request from client -- see index.js
+        callback(); //for acknowledgement of request from client -- see index.js
     });
     
     socket.on('createLocationMessage', (coords) => {
