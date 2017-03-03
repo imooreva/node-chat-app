@@ -26,13 +26,8 @@ socket.on('newLocationMessage', function (message) {
         url: message.url,
         from: message.from,
         createdAt: formattedTime
-    });   
+    });
     
-    //let li = jQuery('<li></li>');
-    //let a = jQuery('<a target="_blank">My current location</a>');    
-    //li.text(`${message.from} ${formattedTime}: `);
-    //a.attr('href', message.url);
-    //li.append(a);
     jQuery('#messages').append(html);
 });
 
