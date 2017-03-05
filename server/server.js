@@ -17,12 +17,19 @@ server.listen(PORT, () => console.log(`Started up on port ${PORT}`));
 
 io.on('connection', (socket) =>{
     console.log('New user connected');    
-    socket.emit('newMessage', generateMessage('Admin','Welcome to the chat app'));    
-    socket.broadcast.emit('newMessage', generateMessage('Admin','New user joined'));
+    
     socket.on('join', (params, callback) => {
         if (!isRealString(params.name) || !isRealString(params.room)) {
             callback('Name and room name are required.');
-        }
+        };
+        socket.join(params.room);
+        //socket.leave('The Lounge')
+        //io.emit -> io.to('The Lounge').emit
+        //socket.broadcast.emit -> socket.broadcast.to('The Lounge').emit
+        //socket.emit
+        
+        socket.emit('newMessage', generateMessage('Admin','Welcome to the chat app'));    
+        socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined.`));
         callback();
     });
     socket.on('createMessage', (message, callback) => {
