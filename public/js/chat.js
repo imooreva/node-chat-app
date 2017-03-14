@@ -1,5 +1,5 @@
 var socket = io();
-
+//using older syntax for client side
 function scrollToBottom() {
     //selectors
     let messages = jQuery('#messages');
@@ -23,7 +23,7 @@ socket.on('connect', function() {
             alert(err);
             window.location.href = '/';
         } else {
-            console.log('No error');
+            console.log('Successful join, no errors.');
         }
     });
 });
@@ -70,7 +70,6 @@ jQuery('#message-form').on('submit', function(e) {
     e.preventDefault();
     let messageTextbox = jQuery('[name=message]');
     socket.emit('createMessage', {
-        from: 'User',
         text: messageTextbox.val()
     }, function() {
         messageTextbox.val('')
